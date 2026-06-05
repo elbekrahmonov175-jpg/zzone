@@ -1,0 +1,23 @@
+version: "3.9"
+
+services:
+  bot:
+    build: .
+    container_name: computer_club_bot
+    restart: unless-stopped
+
+    # Переменные окружения из .env файла
+    env_file:
+      - .env
+
+    # Монтируем тома для сохранения данных и логов
+    volumes:
+      - ./data:/app/data     # База данных SQLite
+      - ./logs:/app/logs     # Логи бота
+
+    # Логирование Docker
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
